@@ -1,0 +1,49 @@
+{
+  "carData": {
+    "idCarData": 0,
+    "idClassOfCar": 1,
+    "idColorCar": 1,
+    "idKppType": 1,
+    "idTypeOfBodyCar": 1,
+    "idTypeOfFuel": 3
+  },
+  "carStatus": {
+    "freeCar": false,
+    "idCarStatus": 0
+  },
+  "idCar": 0,
+  "model": {
+    "idModel": 0,
+    "modelName": "Lada Priora",
+    "yearOfIssue": 2008
+  },
+  "rental": {
+    "beginRentalDate": null,
+    "endRentalDate": null,
+    "idRental": 0
+  }
+}
+
+
+{
+  "carData": {
+    "idClassOfCar": 1,
+    "idColorCar": 1,
+    "idKppType": 1,
+    "idTypeOfBodyCar": 1,
+    "idTypeOfFuel": 3
+  },
+  "carStatus": {
+    "freeCar": false
+  },
+  "idCar": 0,
+  "model": {
+    "idModel": 0,
+    "modelName": "Lada Priora",
+    "yearOfIssue": 2008
+  },
+  "rental": {
+    "beginRentalDate": null,
+    "endRentalDate": null
+  }
+}
