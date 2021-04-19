@@ -1,6 +1,9 @@
 package org.bohdanov.rentalCar.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.bohdanov.rentalCar.entity.car.Car;
+import org.bohdanov.rentalCar.entity.car.CarView;
 import org.bohdanov.rentalCar.entity.rating.CarRating;
 import org.bohdanov.rentalCar.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,16 @@ public class CarController {
     private CarService carService;
 
     @GetMapping("/cars")
-    public ResponseEntity<List<Car>> getAllCars() {
+    @JsonView(CarView.Public.class)
+    public ResponseEntity<List<Car>> getAllCars() throws JsonProcessingException {
+        //List<Car> cars = new ArrayList<>();
+        //ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            mapper.writerWithView(CarView.Public.class)
+//                    .writeValue((JsonGenerator) carService.getAllCars(), cars);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
     }
 
