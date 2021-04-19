@@ -1,18 +1,19 @@
 package org.bohdanov.rentalCar.entity.car;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import org.bohdanov.rentalCar.entity.rental.CarStatus;
 import org.bohdanov.rentalCar.entity.rental.PriceCar;
-import org.springframework.core.io.ByteArrayResource;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,10 +31,6 @@ public class Car {
     @JsonView(CarView.Public.class)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PriceCar priceCar;
-
-    @Transient
-    @JsonView(CarView.Internal.class)
-    private ByteArrayResource byteArrayResource;
-    @JsonView(CarView.Public.class)
-    private String pathToPhotoCar;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private PhotoCar photoCar;
 }

@@ -5,9 +5,16 @@ import org.bohdanov.rentalCar.entity.rating.CarRating;
 import org.bohdanov.rentalCar.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,12 +24,18 @@ public class CarService {
     @Autowired
     @Qualifier("carRepository")
     private CarRepository carRepository;
-
+    @Autowired
+    @Qualifier("fileStorageService")
+    private FileStorageService fileStorageService;
     public void saveNewCarForRental(Car car) {
+
+        car.getPhotoCar().setPathToFile(FileStorageServiceImpl.PATH + car.getPhotoCar().getMultipartFile().getOriginalFilename());
         carRepository.save(car);
     }
 
     public List<Car> getAllCars() {
+        List<Car> carList = carRepository.findAll();
+        carList.forEach(car -> fileStorageService.load(car.getPhotoCar().getPathToFile()));
         return carRepository.findAll();
     }
 
@@ -58,5 +71,4 @@ public class CarService {
     private Float calculateAverageRating(Float oldRating, Float newRating, Integer countOfRatings) {
         return ((countOfRatings * oldRating) + newRating) / (countOfRatings + 1);
     }
-
 }

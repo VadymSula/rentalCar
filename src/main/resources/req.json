@@ -47,3 +47,28 @@
     "endRentalDate": null
   }
 }
+=================
+
+{
+  "carData": {
+    "idClassOfCar": 1,
+    "idColorCar": 1,
+    "idKppType": 1,
+    "idTypeOfBodyCar": 1,
+    "idTypeOfFuel": 2
+  },
+  "carStatus": {
+    "freeCar": true
+  },
+  "idCar": 0,
+  "model": {
+    "idModel": 0,
+    "modelName": "Lada",
+    "yearOfIssue": 2000
+  },
+  "pathToPhotoCar": "string",
+  "priceCar": {
+    "idPrice": 0,
+    "pricePerHour": 0
+  }
+}

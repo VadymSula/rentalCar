@@ -2,16 +2,27 @@ package org.bohdanov.rentalCar.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bohdanov.rentalCar.entity.car.Car;
 import org.bohdanov.rentalCar.entity.car.CarView;
+import org.bohdanov.rentalCar.entity.car.PhotoCar;
 import org.bohdanov.rentalCar.entity.rating.CarRating;
 import org.bohdanov.rentalCar.services.CarService;
+import org.bohdanov.rentalCar.services.FileStorageService;
+import org.bohdanov.rentalCar.services.FileStorageServiceImpl;
+import org.bohdanov.rentalCar.storage.FilesInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +33,13 @@ public class CarController {
     @Autowired
     @Qualifier("carService")
     private CarService carService;
+    @Autowired
+    @Qualifier("fileStorageService")
+    private FileStorageService fileStorageService;
 
     @GetMapping("/cars")
     @JsonView(CarView.Public.class)
-    public ResponseEntity<List<Car>> getAllCars() throws JsonProcessingException {
-        //List<Car> cars = new ArrayList<>();
-        //ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            mapper.writerWithView(CarView.Public.class)
-//                    .writeValue((JsonGenerator) carService.getAllCars(), cars);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+    public ResponseEntity<List<Car>> getAllCars() {
         return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
     }
 
@@ -52,10 +58,13 @@ public class CarController {
         return new ResponseEntity<>(carService.getFreeCars(), HttpStatus.OK);
     }
 
-    @PutMapping("/add-car")
-    public ResponseEntity<HttpStatus> addNewCar(@RequestBody Car car) {
+    @JsonView(CarView.Public.class)
+    @PostMapping("/add-car")
+    public ResponseEntity<HttpStatus> addNewCar(@RequestPart("file") MultipartFile file,
+                                                @RequestBody Car car) {
+        fileStorageService.save(file);
         carService.saveNewCarForRental(car);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-car/{idCar}")
@@ -73,5 +82,17 @@ public class CarController {
     public ResponseEntity<HttpStatus> updateRatingCarBy(@RequestBody CarRating carRating) {
         carService.updateRatingCar(carRating);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<?> image() throws IOException {
+        final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
+                "src/main/resources/photos/data.png"
+        )));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentLength(inputStream.contentLength())
+                .body(inputStream);
+
     }
 }
