@@ -60,8 +60,8 @@ public class CarController {
 
     @JsonView(CarView.Public.class)
     @PostMapping("/add-car")
-    public ResponseEntity<HttpStatus> addNewCar(@RequestPart("file") MultipartFile file,
-                                                @RequestBody Car car) {
+    public ResponseEntity<HttpStatus> addNewCar(@RequestPart MultipartFile file,
+                                                @RequestPart Car car) {
         fileStorageService.save(file);
         carService.saveNewCarForRental(car);
         return new ResponseEntity<>(HttpStatus.OK);
