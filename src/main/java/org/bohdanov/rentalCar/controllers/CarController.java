@@ -54,15 +54,21 @@ public class CarController {
     }
 
     @JsonView(CarView.Public.class)
-    @PostMapping("/add-car")
-    public ResponseEntity<HttpStatus> addNewCar(@RequestPart MultipartFile file,
-                                                @RequestPart Car car) {
+    @PostMapping("/renter/add-car")
+    public ResponseEntity<HttpStatus> addNewCar(
+            @RequestPart MultipartFile file,
+            @RequestPart Car car) {
         fileStorageService.save(file);
         carService.saveNewCarForRental(car);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete-car/{idCar}")
+    @GetMapping("/renter/{idUser}/my-cars")
+    public ResponseEntity<?> getMyCars(@PathVariable("idUser") Long idUser) {
+        return new ResponseEntity<>(carService.getMyCars(idUser), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/renter/my-cars/delete-car/{idCar}")
     public ResponseEntity<?> deleteCarById(@PathVariable("idCar") Long idCar) {
         try {
             carService.deleteCarById(idCar);

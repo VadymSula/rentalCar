@@ -27,6 +27,12 @@ public class CarService {
     @Autowired
     @Qualifier("fileStorageService")
     private FileStorageService fileStorageService;
+
+    public List<Car> getMyCars(Long idUserRent) {
+        List<Car> carList = carRepository.findAll();
+        carList.forEach(car -> fileStorageService.load(car.getPhotoCar().getPathToFile()));
+        return carRepository.getMyCars(idUserRent);
+    }
     public void saveNewCarForRental(Car car) {
 
         car.getPhotoCar().setPathToFile(FileStorageServiceImpl.PATH + car.getPhotoCar().getMultipartFile().getOriginalFilename());

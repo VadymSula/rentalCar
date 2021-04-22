@@ -1,8 +1,8 @@
 package org.bohdanov.rentalCar.controllers;
 
-import org.bohdanov.rentalCar.services.security.JwtUserDetailsService;
 import org.bohdanov.rentalCar.models.jwtModels.JwtRequest;
 import org.bohdanov.rentalCar.models.jwtModels.JwtResponse;
+import org.bohdanov.rentalCar.services.security.UserService;
 import org.bohdanov.rentalCar.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class JwtAuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private JwtUserDetailsService userDetailsService;
+    private UserService userDetailsService;
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {

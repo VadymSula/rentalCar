@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bohdanov.rentalCar.entity.rental.CarStatus;
 import org.bohdanov.rentalCar.entity.rental.PriceCar;
+import org.bohdanov.rentalCar.entity.roles.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -33,4 +34,6 @@ public class Car {
     private PriceCar priceCar;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PhotoCar photoCar;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private User userRent;
 }
