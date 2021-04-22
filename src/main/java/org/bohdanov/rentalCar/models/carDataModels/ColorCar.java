@@ -1,4 +1,4 @@
-package org.bohdanov.rentalCar.storage;
+package org.bohdanov.rentalCar.models.carDataModels;
 
 import java.util.TreeMap;
 
@@ -19,7 +19,7 @@ public class ColorCar implements StorageForCarData {
     @Override
     public void addNew(String data) {
         if (isNotExistType(data, getColors())) {
-            getColors().put(getColors().lastKey(), data);
+            getColors().put(getColors().lastKey() + 1, data);
         }
     }
 

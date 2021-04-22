@@ -2,7 +2,7 @@ package org.bohdanov.rentalCar.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.bohdanov.rentalCar.mappers.CustomMapper;
-import org.bohdanov.rentalCar.storage.*;
+import org.bohdanov.rentalCar.models.carDataModels.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

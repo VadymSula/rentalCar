@@ -1,4 +1,4 @@
-package org.bohdanov.rentalCar.storage.models;
+package org.bohdanov.rentalCar.models.jwtModels;
 
 import lombok.Getter;
 import lombok.Setter;

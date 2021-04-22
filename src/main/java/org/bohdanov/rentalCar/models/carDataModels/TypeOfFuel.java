@@ -1,6 +1,4 @@
-package org.bohdanov.rentalCar.storage;
-
-import com.fasterxml.jackson.annotation.JsonGetter;
+package org.bohdanov.rentalCar.models.carDataModels;
 
 import java.util.TreeMap;
 
@@ -17,7 +15,7 @@ public class TypeOfFuel implements StorageForCarData {
     @Override
     public void addNew(String data) {
         if (isNotExistType(data, getTypesOfFuel())) {
-            getTypesOfFuel().put(getTypesOfFuel().lastKey(), data);
+            getTypesOfFuel().put(getTypesOfFuel().lastKey() + 1, data);
         }
     }
 

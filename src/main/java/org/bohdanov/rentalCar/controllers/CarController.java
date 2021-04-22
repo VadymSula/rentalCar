@@ -1,16 +1,11 @@
 package org.bohdanov.rentalCar.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bohdanov.rentalCar.entity.car.Car;
 import org.bohdanov.rentalCar.entity.car.CarView;
-import org.bohdanov.rentalCar.entity.car.PhotoCar;
 import org.bohdanov.rentalCar.entity.rating.CarRating;
 import org.bohdanov.rentalCar.services.CarService;
 import org.bohdanov.rentalCar.services.FileStorageService;
-import org.bohdanov.rentalCar.services.FileStorageServiceImpl;
-import org.bohdanov.rentalCar.storage.FilesInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ByteArrayResource;
@@ -75,7 +70,7 @@ public class CarController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Doesn't exist element with id = " + idCar + " for remove");
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/cars/set-rating")

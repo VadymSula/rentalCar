@@ -1,4 +1,4 @@
-package org.bohdanov.rentalCar.storage;
+package org.bohdanov.rentalCar.models.carDataModels;
 
 import java.util.TreeMap;
 
@@ -15,7 +15,7 @@ public class ClassOfCar implements StorageForCarData {
     @Override
     public void addNew(String data) {
         if (isNotExistType(data, getClassesOfCar())) {
-            getClassesOfCar().put(getClassesOfCar().lastKey(), data);
+            getClassesOfCar().put(getClassesOfCar().lastKey() + 1, data);
         }
     }
 

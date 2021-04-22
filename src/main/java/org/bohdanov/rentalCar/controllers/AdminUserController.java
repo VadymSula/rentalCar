@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class AdminController {
+public class AdminUserController {
     @Autowired
     @Qualifier("userService")
     private UserService userService;
@@ -40,6 +40,6 @@ public class AdminController {
         if (!userService.deleteUser(idUser)) {
             return ResponseEntity.badRequest().body("Doesn't exist user with id = " + idUser + " for remove");
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
