@@ -1,7 +1,5 @@
 package org.bohdanov.rentalCar.storage;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-
 import java.util.TreeMap;
 
 public class ColorCar implements StorageForCarData {

@@ -22,6 +22,8 @@ public class User implements UserDetails {
     private Long idUser;
     private String username;
     private String password;
+    @Transient
+    private boolean isRentRole;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
