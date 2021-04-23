@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class AdminCarDataController {
     private static final List<String> typesList = Arrays.asList("classT", "colorT", "kppT", "bodyT", "fuelT");
