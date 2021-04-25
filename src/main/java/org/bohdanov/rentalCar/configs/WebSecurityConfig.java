@@ -88,7 +88,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf()
+                .cors()
                 .disable()
                 .authorizeRequests()
                     .antMatchers("/authenticate", "/", "/registration").permitAll()
