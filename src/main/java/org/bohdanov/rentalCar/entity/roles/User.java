@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import org.bohdanov.rentalCar.models.jwtModels.JwtResponse;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -24,6 +25,8 @@ public class User implements UserDetails {
     private String password;
     @Transient
     private boolean isRentRole;
+    @Transient
+    private JwtResponse token;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 

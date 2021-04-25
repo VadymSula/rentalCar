@@ -107,6 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*")
+                .allowedOrigins("https://rental-car-ua.netlify.app/", "https://localhost:3000/")
                 .allowedHeaders("*")
                 .allowedMethods("*");
     }
