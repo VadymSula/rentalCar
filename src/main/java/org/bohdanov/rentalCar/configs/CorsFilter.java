@@ -29,7 +29,6 @@ public class CorsFilter implements Filter, WebMvcConfigurer {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With,observe");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Expose-Headers", "Authorization");
         response.addHeader("Access-Control-Expose-Headers", "USERID");
         response.addHeader("Access-Control-Expose-Headers", "ROLE");
         response.addHeader("Access-Control-Expose-Headers", "responseType");
