@@ -5,12 +5,15 @@ import org.bohdanov.rentalCar.models.jwtModels.JwtResponse;
 import org.bohdanov.rentalCar.services.security.UserService;
 import org.bohdanov.rentalCar.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +41,10 @@ public class JwtAuthenticationController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        MultiValueMap<String,String> header = new LinkedMultiValueMap<>();
+        header.add("token", new JwtResponse(token).toString());
+
+        return new ResponseEntity<>(userDetails, header, HttpStatus.OK);
     }
 
     private void authenticate(String username, String password) throws Exception {
