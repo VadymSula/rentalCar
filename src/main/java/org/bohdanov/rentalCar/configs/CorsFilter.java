@@ -62,7 +62,7 @@ public class CorsFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException, IOException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpServletRequest request= (HttpServletRequest) servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
 
         response.setHeader("Access-Control-Allow-Origin", "https://rental-car-ua.netlify.app");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
