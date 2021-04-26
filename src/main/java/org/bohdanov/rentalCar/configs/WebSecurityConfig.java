@@ -17,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -42,6 +43,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        return new CorsFilter();
     }
 
     @Bean
@@ -88,6 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
                 .csrf()
                 .disable()
                 .authorizeRequests()
@@ -105,19 +112,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+////        registry.addMapping("/**")
+////                .allowedOrigins("https://rental-car-ua.netlify.app")
+////                .allowedHeaders("*", "Authorization")
+////                .allowedMethods("*");
 //        registry.addMapping("/**")
 //                .allowedOrigins("https://rental-car-ua.netlify.app")
-//                .allowedHeaders("*", "Authorization")
-//                .allowedMethods("*");
-        registry.addMapping("/**")
-                .allowedOrigins("https://rental-car-ua.netlify.app")
-                .allowedMethods("GET", "POST", "OPTIONS", "PUT")
-                .allowedHeaders("Content-Type", "X-Requested-With", "Authorization", "accept", "Origin", "Access-Control-Request-Method",
-                        "Access-Control-Request-Headers")
-                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
-                .allowCredentials(true)
-                .maxAge(3600);
-    }
+//                .allowedMethods("GET", "POST", "OPTIONS", "PUT", "DELETE")
+//                .allowedHeaders("Content-Type", "X-Requested-With", "Authorization", "accept", "Origin", "Access-Control-Request-Method",
+//                        "Access-Control-Request-Headers")
+//                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+//                .allowCredentials(true)
+//                .maxAge(3600);
+//    }
 }
