@@ -66,9 +66,9 @@ public class CorsFilter implements Filter {
 
         response.setHeader("Access-Control-Allow-Origin", "https://rental-car-ua.netlify.app");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, observe");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Max-Age", "180");
+        response.setHeader("Access-Control-Max-Age", "3600");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
