@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "https://rental-car-ua.netlify.app")
+@CrossOrigin("*")
 @RestController
 public class CarController {
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://rental-car-ua.netlify.app")
+@CrossOrigin("*")
 @RestController
 public class AdminUserController {
     @Autowired
