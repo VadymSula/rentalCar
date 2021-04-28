@@ -1,5 +1,6 @@
 package org.bohdanov.rentalCar.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.bohdanov.rentalCar.models.carDataModels.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,19 @@ import java.util.Objects;
 public class AdminCarDataController {
     private static final List<String> typesList = Arrays.asList("classT", "colorT", "kppT", "bodyT", "fuelT");
 
+    @ApiOperation(
+            value = "Admin: Get types",
+            notes = "Get types, categories, classes of cars"
+    )
     @GetMapping("/admin/data-types")
     public ResponseEntity<List<String>> getTypeNames() {
         return new ResponseEntity<>(typesList, HttpStatus.OK);
     }
 
+    @ApiOperation(
+            value = "Admin: Add new type",
+            notes = "Add new types by data from list of types"
+    )
     @PostMapping("/admin/data-of-cars/add")
     public ResponseEntity<HttpStatus> addNewType(
             @RequestPart String data,
@@ -28,6 +37,10 @@ public class AdminCarDataController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ApiOperation(
+            value = "Admin: Delete data from types",
+            notes = "Remove data by type from list of types"
+    )
     @DeleteMapping("/admin/data-of-cars/delete/{idData}")
     public ResponseEntity<HttpStatus> removeData(
             @PathVariable("idData") Integer idData,

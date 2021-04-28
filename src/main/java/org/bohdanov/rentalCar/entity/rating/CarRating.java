@@ -13,6 +13,7 @@ public class CarRating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idRating;
+    @Column(columnDefinition = "0.0")
     private Float ratingCar;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Car car;

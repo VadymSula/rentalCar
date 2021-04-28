@@ -5,16 +5,8 @@ import org.bohdanov.rentalCar.entity.rating.CarRating;
 import org.bohdanov.rentalCar.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +26,6 @@ public class CarService {
         return carRepository.getMyCars(idUserRent);
     }
     public void saveNewCarForRental(Car car) {
-
         car.getPhotoCar().setPathToFile(FileStorageServiceImpl.PATH + car.getPhotoCar().getMultipartFile().getOriginalFilename());
         carRepository.save(car);
     }
@@ -63,7 +54,6 @@ public class CarService {
                 (getOldRating(newCarRating.getCar().getIdCar()).getCountOfRatings()) + 1,
                 newRating,
                 newCarRating.getCar().getIdCar());
-
     }
 
     public List<Car> getFreeCars() {

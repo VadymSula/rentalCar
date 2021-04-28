@@ -15,8 +15,5 @@ public class PhotoCar {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idPhoto;
-    @Transient
-    private MultipartFile multipartFile;
-    @JsonIgnore
-    private String pathToFile;
+
 }

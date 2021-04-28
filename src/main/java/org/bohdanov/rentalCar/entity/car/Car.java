@@ -1,5 +1,6 @@
 package org.bohdanov.rentalCar.entity.car;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
@@ -32,8 +33,7 @@ public class Car {
     @JsonView(CarView.Public.class)
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PriceCar priceCar;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private PhotoCar photoCar;
+    private String pathToFile;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User userRent;
 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class RentalReview {
+public class RentalFeedback {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idReview;

@@ -1,6 +1,7 @@
 package org.bohdanov.rentalCar.controllers;
 
-import org.bohdanov.rentalCar.entity.rating.RentalReview;
+import io.swagger.annotations.ApiOperation;
+import org.bohdanov.rentalCar.entity.rating.RentalFeedback;
 import org.bohdanov.rentalCar.entity.rental.Rental;
 import org.bohdanov.rentalCar.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,22 @@ public class RentalController {
     @Qualifier("rentalService")
     private RentalService rentalService;
 
+    @ApiOperation("Add rental")
     @PostMapping("/cars/add-rental")
     public ResponseEntity<HttpStatus> addNewRentalById(@RequestBody Rental rental) {
         rentalService.addNewRental(rental);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/add-rental-review")
-    public ResponseEntity<HttpStatus> addRentalReview(@RequestBody RentalReview rentalReview) {
-        SecurityContextHolder.getContext().getAuthentication().getName();
-        rentalReview.setLoginName(SecurityContextHolder.getContext().getAuthentication().getName());
+    @ApiOperation(
+            value = "Add rental feedback",
+            notes = "Add feedback, after his go to -> /cars/set-rating"
+    )
+    @PostMapping("/add-rental/feedback")
+    public ResponseEntity<HttpStatus> addRentalFeedback(@RequestBody RentalFeedback rentalFeedback) {
+        rentalFeedback.setLoginName(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        rentalService.addNewReviewAboutRental(rentalReview);
+        rentalService.addNewReviewAboutRental(rentalFeedback);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

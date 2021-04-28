@@ -1,5 +1,6 @@
 package org.bohdanov.rentalCar.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.bohdanov.rentalCar.entity.roles.User;
 import org.bohdanov.rentalCar.exceptions.UserNameAlreadyExistException;
 import org.bohdanov.rentalCar.models.jwtModels.JwtResponse;
@@ -37,6 +38,7 @@ public class RegistrationController {
     @Autowired
     private UserService userDetailsService;
 
+    @ApiOperation(value = "Registration", notes = "Registration for user")
     @PostMapping("/registration")
     public ResponseEntity<?> addUser(@RequestBody User user, BindingResult bindingResult) throws Exception {
 

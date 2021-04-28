@@ -1,5 +1,6 @@
 package org.bohdanov.rentalCar.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.bohdanov.rentalCar.entity.roles.User;
 import org.bohdanov.rentalCar.exceptions.ElementNotFoundException;
 import org.bohdanov.rentalCar.services.security.UserService;
@@ -18,11 +19,13 @@ public class AdminUserController {
     @Qualifier("userService")
     private UserService userService;
 
+    @ApiOperation("Admin: Get users")
     @GetMapping("/admin/users")
     public ResponseEntity<List<User>> getUsersList() {
         return new ResponseEntity<>(userService.allUsers(), HttpStatus.OK);
     }
 
+    @ApiOperation("Admin: Get user by Id")
     @GetMapping("/admin/users/{idUser}")
     public ResponseEntity<?> getUserById(@PathVariable("idUser") Long idUser) {
         try {
@@ -33,6 +36,7 @@ public class AdminUserController {
 
     }
 
+    @ApiOperation("Admin: Delete user by Id")
     @DeleteMapping("/admin/users/{idUser}/delete")
     public ResponseEntity<String> deleteUserById(@PathVariable("idUser") Long idUser) {
         if (!userService.deleteUser(idUser)) {
