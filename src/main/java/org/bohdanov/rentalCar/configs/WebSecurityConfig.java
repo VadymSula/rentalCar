@@ -90,24 +90,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 //                    .logoutSuccessUrl("/");
 //    }
 
-
+//TODO swagger - without js and css...
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .addFilterBefore(corsFilter(), SessionManagementFilter.class)
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                    .antMatchers("/authenticate", "/", "/registration").permitAll()
-                    .antMatchers("/admin/**", "/swagger-ui.html").hasRole("ADMIN")
-                    .antMatchers("/add-car/**", "/delete-car/**").hasRole("USER_RENT")
-                    .anyRequest().authenticated()
-                .and()
-                    .exceptionHandling()
-                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .csrf();
+//                .disable()
+//                .authorizeRequests()
+//                    .antMatchers("/authenticate", "/", "/registration").permitAll()
+//                    .antMatchers("/admin/**", "/swagger-ui.html").hasRole("ADMIN")
+//                    .antMatchers("/add-car/**", "/delete-car/**").hasRole("USER_RENT")
+//                    .anyRequest().authenticated()
+//                .and()
+//                    .exceptionHandling()
+//                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+//                .and()
+//                    .sessionManagement()
+//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
