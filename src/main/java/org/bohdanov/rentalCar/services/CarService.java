@@ -22,17 +22,17 @@ public class CarService {
 
     public List<Car> getMyCars(Long idUserRent) {
         List<Car> carList = carRepository.findAll();
-        carList.forEach(car -> fileStorageService.load(car.getPhotoCar().getPathToFile()));
+        carList.forEach(car -> fileStorageService.load(car.getPathToFile()));
         return carRepository.getMyCars(idUserRent);
     }
     public void saveNewCarForRental(Car car) {
-        car.getPhotoCar().setPathToFile(FileStorageServiceImpl.PATH + car.getPhotoCar().getMultipartFile().getOriginalFilename());
+        car.setPathToFile(FileStorageServiceImpl.PATH + car.getPathToFile());
         carRepository.save(car);
     }
 
     public List<Car> getAllCars() {
         List<Car> carList = carRepository.findAll();
-        carList.forEach(car -> fileStorageService.load(car.getPhotoCar().getPathToFile()));
+        carList.forEach(car -> fileStorageService.load(car.getPathToFile()));
         return carRepository.findAll();
     }
 
