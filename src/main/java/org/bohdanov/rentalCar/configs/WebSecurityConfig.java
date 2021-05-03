@@ -44,11 +44,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
+//TODO закоммітив 49-52 і 97-114 для откл авторизації
 
-    @Bean
-    public CorsFilter corsFilter() {
-        return new CorsFilter();
-    }
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        return new CorsFilter();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -93,10 +94,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 //TODO swagger - without js and css...
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
-                .csrf();
-//                .disable()
+//        httpSecurity
+//                .addFilterBefore(corsFilter(), SessionManagementFilter.class)
+//                .csrf()
+//                .disable();
+        httpSecurity.cors().and().csrf().disable();
 //                .authorizeRequests()
 //                    .antMatchers("/authenticate", "/", "/registration").permitAll()
 //                    .antMatchers("/admin/**", "/swagger-ui.html").hasRole("ADMIN")
@@ -109,7 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 //                    .sessionManagement()
 //                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        //httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 //    @Override
