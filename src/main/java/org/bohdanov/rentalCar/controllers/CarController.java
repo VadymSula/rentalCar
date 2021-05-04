@@ -66,11 +66,15 @@ public class CarController {
     )
     @JsonView(CarView.Public.class)
     @PostMapping("/renter/add-car")
-    public ResponseEntity<HttpStatus> addNewCar(
-            @RequestPart MultipartFile file,
-            @RequestBody Car car) {
-        fileStorageService.save(file);
+    public ResponseEntity<HttpStatus> addNewCar(@RequestBody Car car) {
         carService.saveNewCarForRental(car);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ApiOperation("Renter: Second request for adding car")
+    @PutMapping("/renter/add-car")
+    public ResponseEntity<HttpStatus> putPngForCar(@RequestPart MultipartFile file) {
+        fileStorageService.save(file);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
