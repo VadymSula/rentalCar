@@ -68,12 +68,12 @@ public class CarController {
     @PostMapping("/renter/add-car")
     public ResponseEntity<HttpStatus> addNewCar(
             @RequestPart MultipartFile file,
-            @RequestPart Car car) {
+            @RequestBody Car car) {
         fileStorageService.save(file);
         carService.saveNewCarForRental(car);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+
     @ApiOperation(
             value = "Renter: Get my cars",
             notes = "Get renter's cars by Id"
