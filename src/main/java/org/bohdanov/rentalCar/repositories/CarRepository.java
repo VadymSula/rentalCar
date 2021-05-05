@@ -11,34 +11,30 @@ import java.util.List;
 
 @Repository("carRepository")
 public interface CarRepository extends JpaRepository<Car, Long> {
-    @Query(value = "SELECT car.id_car, car.model_id_model, model.model_name, cs.is_free_car " +
+    @Query(value = "SELECT car.id_car, car.model_id_model, model.model_name " +
             "FROM car JOIN model on car.model_id_model = model.id_model " +
-            "JOIN car_status cs on car.car_status_id_car_status = cs.id_car_status " +
             "JOIN t_user tu on car.user_rent_id_user = tu.id_user " +
             "WHERE car.user_rent_id_user = :idUser",
             nativeQuery = true)
     List<Car> getMyCars(@Param("idUser") Long idUser);
     @Query(value =
-            "SELECT car.id_car, car.model_id_model, model.model_name, cs.is_free_car " +
-            "FROM " +
-            "car JOIN model on car.model_id_model = model.id_model " +
-            "JOIN car_status cs on car.car_status_id_car_status = cs.id_car_status " +
-            "WHERE cs.is_free_car = true",
+            "SELECT car.id_car, car.model_id_model, model.model_name " +
+            "FROM car JOIN model on car.model_id_model = model.id_model "+
+            "WHERE car.is_free_car = true",
             nativeQuery = true)
     List<Car> getAllFreeCars();
 
     @Query(value =
-            "INSERT INTO car_rating (id_rating, count_of_ratings, rating_car, car_id_car) " +
-            "VALUES (DEFAULT, :count :rating, :idCar)",
+            "INSERT INTO car_rating (id_rating, count_of_ratings, rating_car) " +
+            "VALUES (DEFAULT, :count :rating)",
             nativeQuery = true)
     void updateRating(@Param("count") Integer countOfRatings,
-                      @Param("rating") Float rating,
-                      @Param("idCar") Long idCar);
+                      @Param("rating") Double rating);
 
     @Query(value =
-            "SELECT rating_car, count_of_ratings " +
-            "FROM car_rating " +
-            "WHERE car_id_car = :idCar",
+            "SELECT id_car, rating_car, count_of_ratings " +
+            "FROM car JOIN car_rating on car.car_rating_id_rating = car_rating.id_rating " +
+            "WHERE car.id_car = :idCar",
             nativeQuery = true)
-    CarRating getRatingByIdCar(@Param("idCar") Long idCar);
+    Car getRatingByIdCar(@Param("idCar") Long idCar);
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service("carService")
@@ -21,22 +23,19 @@ public class CarService {
     private FileStorageService fileStorageService;
 
     public List<Car> getMyCars(Long idUserRent) {
-        List<Car> carList = carRepository.findAll();
-        carList.forEach(car -> fileStorageService.load(car.getPathToFile()));
         return carRepository.getMyCars(idUserRent);
     }
     public void saveNewCarForRental(Car car) {
-        car.setPathToFile(FileStorageServiceImpl.PATH + car.getPathToFile());
+        //car.setPathToFile(FileStorageServiceImpl.PATH.resolve(Objects.requireNonNull(car.getPathToFile())).toString());
         carRepository.save(car);
     }
 
     public List<Car> getAllCars() {
-        List<Car> carList = carRepository.findAll();
-        carList.forEach(car -> fileStorageService.load(car.getPathToFile()));
         return carRepository.findAll();
     }
 
     public Optional<Car> getCarById(Long idCar) {
+
         return carRepository.findById(idCar);
     }
 
@@ -44,27 +43,27 @@ public class CarService {
         carRepository.deleteById(idCar);
     }
 
-    public void updateRatingCar(CarRating newCarRating) {
-        Float newRating = calculateAverageRating(
-                getOldRating(newCarRating.getCar().getIdCar()).getRatingCar(),
-                newCarRating.getRatingCar(),
-                getOldRating(newCarRating.getCar().getIdCar()).getCountOfRatings()
+    // TODO Dont work requests with @Query req to db
+    public void updateRatingCar(Car car) {
+        Double newRating = calculateAverageRating(
+                getOldRating(car.getIdCar()).getCarRating().getRatingCar(),
+                car.getCarRating().getRatingCar(),
+                getOldRating(car.getIdCar()).getCarRating().getCountOfRatings()
         );
         carRepository.updateRating(
-                (getOldRating(newCarRating.getCar().getIdCar()).getCountOfRatings()) + 1,
-                newRating,
-                newCarRating.getCar().getIdCar());
+                (getOldRating(car.getIdCar()).getCarRating().getCountOfRatings()) + 1,
+                newRating);
     }
 
     public List<Car> getFreeCars() {
         return carRepository.getAllFreeCars();
     }
 
-    private CarRating getOldRating(Long idCar) {
+    private Car getOldRating(Long idCar) {
         return carRepository.getRatingByIdCar(idCar);
     }
 
-    private Float calculateAverageRating(Float oldRating, Float newRating, Integer countOfRatings) {
+    private Double calculateAverageRating(Double oldRating, Double newRating, Integer countOfRatings) {
         return ((countOfRatings * oldRating) + newRating) / (countOfRatings + 1);
     }
 }

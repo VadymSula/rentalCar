@@ -7,3 +7,5 @@ INSERT INTO t_user_roles (user_id_user, roles_id)
     VALUES (0, 3),
            (1, 1),
            (2, 2);
+INSERT INTO model (id_model, model_name, year_of_issue)
+VALUES (1, 's', 1);

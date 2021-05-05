@@ -35,7 +35,7 @@ public class CarController {
 
     @ApiOperation("Get all cars")
     @GetMapping("/cars")
-    @JsonView(CarView.Public.class)
+    //@JsonView(CarView.Public.class)
     public ResponseEntity<List<Car>> getAllCars() {
         return ResponseEntity
                 .ok()
@@ -101,11 +101,12 @@ public class CarController {
 
     @ApiOperation(
             value = "Set rating for car",
-            notes = "User can set rating after rent end (from 0 to 5 stars)"
+            notes = "User can set rating after rent end (from 0 to 5 stars).\n" +
+                    "Put only: idCar and ratingCar"
     )
     @PostMapping("/cars/set-rating")
-    public ResponseEntity<HttpStatus> updateRatingCarBy(@RequestBody CarRating carRating) {
-        carService.updateRatingCar(carRating);
+    public ResponseEntity<HttpStatus> updateRatingCarBy(@RequestBody Car car) {
+        carService.updateRatingCar(car);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -114,7 +115,7 @@ public class CarController {
             value = "/image/{fileName}",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
-    public ResponseEntity<?> image(@PathVariable("fileName") String fileName)
+    public ResponseEntity<?> getImageByFileName(@PathVariable("fileName") String fileName)
             throws IOException {
         final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
                 "src/main/resources/photos/" + fileName

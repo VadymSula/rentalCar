@@ -1,6 +1,7 @@
 package org.bohdanov.rentalCar.entity.rental;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.bohdanov.rentalCar.entity.car.Car;
@@ -18,6 +19,7 @@ public class Rental {
     private Long idRental;
     private Date beginRentalDate;
     private Date endRentalDate;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Car car;
 }

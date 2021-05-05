@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @Setter
 public class CarData {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long idCarData;
     private Integer idClassOfCar;

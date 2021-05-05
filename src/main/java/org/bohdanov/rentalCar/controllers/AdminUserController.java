@@ -33,7 +33,6 @@ public class AdminUserController {
         } catch (ElementNotFoundException e) {
             return ResponseEntity.badRequest().body("Doesn't exist user with id = " + idUser);
         }
-
     }
 
     @ApiOperation("Admin: Delete user by Id")
