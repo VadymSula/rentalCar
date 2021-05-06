@@ -1,20 +1,22 @@
 package org.bohdanov.rentalCar.services;
 
 import org.bohdanov.rentalCar.entity.car.Car;
-import org.bohdanov.rentalCar.entity.rating.CarRating;
+import org.bohdanov.rentalCar.entity.car.Model;
 import org.bohdanov.rentalCar.repositories.CarRepository;
+import org.bohdanov.rentalCar.repositories.ModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service("carService")
 public class CarService {
 
+    @Autowired
+    @Qualifier("modelRepository")
+    private ModelRepository modelRepository;
     @Autowired
     @Qualifier("carRepository")
     private CarRepository carRepository;
@@ -25,9 +27,16 @@ public class CarService {
     public List<Car> getMyCars(Long idUserRent) {
         return carRepository.getMyCars(idUserRent);
     }
+
     public void saveNewCarForRental(Car car) {
         //car.setPathToFile(FileStorageServiceImpl.PATH.resolve(Objects.requireNonNull(car.getPathToFile())).toString());
         carRepository.save(car);
+    }
+
+    public Model saveNewModelOfCarAndGetHer(Model model) {
+        modelRepository.save(model);
+        return modelRepository.getLastModel();
+
     }
 
     public List<Car> getAllCars() {
@@ -35,7 +44,6 @@ public class CarService {
     }
 
     public Optional<Car> getCarById(Long idCar) {
-
         return carRepository.findById(idCar);
     }
 

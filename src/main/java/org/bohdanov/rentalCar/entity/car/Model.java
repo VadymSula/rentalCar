@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class Model {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idModel;
     private String modelName;
     private Integer yearOfIssue;

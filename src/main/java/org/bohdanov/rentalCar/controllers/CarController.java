@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.ApiOperation;
 import org.bohdanov.rentalCar.entity.car.Car;
 import org.bohdanov.rentalCar.entity.car.CarView;
+import org.bohdanov.rentalCar.entity.car.Model;
 import org.bohdanov.rentalCar.entity.rating.CarRating;
 import org.bohdanov.rentalCar.services.CarService;
 import org.bohdanov.rentalCar.services.FileStorageService;
@@ -55,7 +56,7 @@ public class CarController {
 
     @ApiOperation("Get all free cars for rental")
     @GetMapping("/cars/free")
-    public ResponseEntity<List<Car>> getAllFreeCars() {
+    public ResponseEntity<List<?>> getAllFreeCars() {
         return new ResponseEntity<>(carService.getFreeCars(), HttpStatus.OK);
     }
 
@@ -125,4 +126,10 @@ public class CarController {
                 .body(inputStream);
     }
 
+    @PostMapping("/renter/add-model")
+    public ResponseEntity<Model> addNewModel(@RequestBody Model model) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(carService.saveNewModelOfCarAndGetHer(model));
+    }
 }
