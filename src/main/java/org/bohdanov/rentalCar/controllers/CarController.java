@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -74,9 +75,15 @@ public class CarController {
 
     @ApiOperation("Renter: Second request for adding car")
     @PutMapping("/renter/add-car")
-    public ResponseEntity<HttpStatus> putPngForCar(@RequestPart MultipartFile file) {
-        fileStorageService.save(file);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> putPngForCar(@RequestPart MultipartFile file) {
+        try {
+            fileStorageService.save(file);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (FileNotFoundException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Could not store the file. Name of file already exist!");
+        }
     }
 
     @ApiOperation(
@@ -102,7 +109,7 @@ public class CarController {
 
     @ApiOperation(
             value = "Set rating for car",
-            notes = "User can set rating after rent end (from 0 to 5 stars).\n" +
+            notes = "User can set rating after rent end (from 0 to 5 stars). " +
                     "Put only: idCar and ratingCar"
     )
     @PostMapping("/cars/set-rating")

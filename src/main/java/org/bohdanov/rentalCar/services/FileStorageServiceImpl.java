@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -29,11 +30,11 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file) throws FileNotFoundException {
         try {
             Files.copy(file.getInputStream(), PATH.resolve(Objects.requireNonNull(file.getOriginalFilename())));
         } catch (Exception e) {
-            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+            throw new FileNotFoundException("Could not store the file");
         }
     }
 

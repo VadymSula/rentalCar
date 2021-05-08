@@ -33,6 +33,10 @@ public class CarService {
         carRepository.save(car);
     }
 
+    public List<Model> getCarModels() {
+        return modelRepository.findAll();
+    }
+
     public Model saveNewModelOfCarAndGetHer(Model model) {
         modelRepository.save(model);
         return modelRepository.getLastModel();
