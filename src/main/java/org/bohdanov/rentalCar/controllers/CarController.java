@@ -74,8 +74,8 @@ public class CarController {
     }
 
     @ApiOperation("Renter: Second request for adding car")
-    @PutMapping("/renter/add-car")
-    public ResponseEntity<?> putPngForCar(@RequestPart MultipartFile file) {
+    @PostMapping("/renter/add-photo-car")
+    public ResponseEntity<?> addPngForCar(@RequestPart MultipartFile file) {
         try {
             fileStorageService.save(file);
             return new ResponseEntity<>(HttpStatus.OK);
