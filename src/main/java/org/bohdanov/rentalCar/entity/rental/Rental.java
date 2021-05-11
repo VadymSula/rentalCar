@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 public class Rental {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long idRental;
     private Date beginRentalDate;

@@ -2,6 +2,7 @@ package org.bohdanov.rentalCar.services;
 
 import org.bohdanov.rentalCar.entity.rating.RentalFeedback;
 import org.bohdanov.rentalCar.entity.rental.Rental;
+import org.bohdanov.rentalCar.repositories.RentFeedbackRepository;
 import org.bohdanov.rentalCar.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,7 +13,8 @@ public class RentalService {
     @Autowired
     @Qualifier("rentalRepository")
     private RentalRepository rentalRepository;
-
+    @Autowired
+    private RentFeedbackRepository rentFeedbackRepository;
 
 
     public void addNewRental(Rental rental) {
@@ -23,11 +25,15 @@ public class RentalService {
         );
     }
 
-    public void addNewReviewAboutRental(RentalFeedback rentalFeedback) {
+    public void addNewReviewAboutRental(Long idCar, RentalFeedback rentalFeedback) {
         rentalRepository.addNewReviewAboutRental(
                 rentalFeedback.getLoginName(),
-                rentalFeedback.getRating(),
                 rentalFeedback.getReviewText()
         );
+        rentalRepository.addIdsToCarRentalFeedback(idCar, getLastFeedback().getIdReview());
+    }
+
+    private RentalFeedback getLastFeedback() {
+        return rentFeedbackRepository.getLastFeedback();
     }
 }

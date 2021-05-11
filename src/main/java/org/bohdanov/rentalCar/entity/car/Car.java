@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import org.bohdanov.rentalCar.entity.rating.CarRating;
+import org.bohdanov.rentalCar.entity.rating.RentalFeedback;
 import org.bohdanov.rentalCar.entity.roles.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,13 +18,13 @@ import javax.persistence.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Car {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(CarView.Internal.class)
     private Long idCar;
 
     @JsonView(CarView.Public.class)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY   )
     private Model model;
 
     @JsonView(CarView.Public.class)
@@ -50,6 +52,13 @@ public class Car {
     private String fileName;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<RentalFeedback> feedbacks;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User userRent;
+
+    @Column(columnDefinition = "TEXT")
+    private String specifics;
 }

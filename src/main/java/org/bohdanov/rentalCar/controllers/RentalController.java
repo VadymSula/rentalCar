@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
 @RestController
@@ -32,11 +29,13 @@ public class RentalController {
             value = "Add rental feedback",
             notes = "Add feedback, after his go to -> /cars/set-rating"
     )
-    @PostMapping("/add-rental/feedback")
-    public ResponseEntity<HttpStatus> addRentalFeedback(@RequestBody RentalFeedback rentalFeedback) {
+    @PostMapping("/end-rental/{idCar}/feedback")
+    public ResponseEntity<HttpStatus> addRentalFeedback(
+            @PathVariable("idCar") Long idCar,
+            @RequestBody RentalFeedback rentalFeedback) {
         rentalFeedback.setLoginName(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        rentalService.addNewReviewAboutRental(rentalFeedback);
+        rentalService.addNewReviewAboutRental(idCar, rentalFeedback);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

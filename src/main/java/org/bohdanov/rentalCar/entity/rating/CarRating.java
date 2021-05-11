@@ -1,9 +1,7 @@
 package org.bohdanov.rentalCar.entity.rating;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
-import org.bohdanov.rentalCar.entity.car.Car;
 
 import javax.persistence.*;
 
@@ -12,9 +10,10 @@ import javax.persistence.*;
 @Setter
 public class CarRating {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRating;
-    @Column(columnDefinition = "decimal(10,2) default '0.00'")
+    @Column(columnDefinition = "decimal(10,2) default '0.00'", nullable = false)
     private Double ratingCar;
+    @Column(columnDefinition = "int default '0'", nullable = false)
     private Integer countOfRatings;
 }

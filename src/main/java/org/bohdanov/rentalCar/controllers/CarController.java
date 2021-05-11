@@ -8,6 +8,7 @@ import org.bohdanov.rentalCar.entity.car.Model;
 import org.bohdanov.rentalCar.entity.rating.CarRating;
 import org.bohdanov.rentalCar.services.CarService;
 import org.bohdanov.rentalCar.services.FileStorageService;
+import org.bohdanov.rentalCar.services.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ByteArrayResource;
@@ -34,6 +35,9 @@ public class CarController {
     @Autowired
     @Qualifier("fileStorageService")
     private FileStorageService fileStorageService;
+    @Autowired
+    @Qualifier("ratingService")
+    private RatingService ratingService;
 
     @ApiOperation("Get all cars")
     @GetMapping("/cars")
@@ -69,6 +73,7 @@ public class CarController {
     @JsonView(CarView.Public.class)
     @PostMapping("/renter/add-car")
     public ResponseEntity<HttpStatus> addNewCar(@RequestBody Car car) {
+
         carService.saveNewCarForRental(car);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -110,11 +115,11 @@ public class CarController {
     @ApiOperation(
             value = "Set rating for car",
             notes = "User can set rating after rent end (from 0 to 5 stars). " +
-                    "Put only: idCar and ratingCar"
+                    "Put only: idRating (GET idRating FROM Car) and ratingCar"
     )
     @PostMapping("/cars/set-rating")
-    public ResponseEntity<HttpStatus> updateRatingCarBy(@RequestBody Car car) {
-        carService.updateRatingCar(car);
+    public ResponseEntity<HttpStatus> updateRatingCarBy(@RequestBody CarRating carRating) {
+        ratingService.updateRatingCar(carRating);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -133,6 +138,7 @@ public class CarController {
                 .body(inputStream);
     }
 
+    @ApiOperation("Add new model")
     @PostMapping("/renter/add-model")
     public ResponseEntity<Model> addNewModel(@RequestBody Model model) {
         return ResponseEntity

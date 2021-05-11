@@ -56,26 +56,11 @@ public class CarService {
     }
 
     // TODO Dont work requests with @Query req to db
-    public void updateRatingCar(Car car) {
-        Double newRating = calculateAverageRating(
-                getOldRating(car.getIdCar()).getCarRating().getRatingCar(),
-                car.getCarRating().getRatingCar(),
-                getOldRating(car.getIdCar()).getCarRating().getCountOfRatings()
-        );
-        carRepository.updateRating(
-                (getOldRating(car.getIdCar()).getCarRating().getCountOfRatings()) + 1,
-                newRating);
-    }
+
 
     public List<Car> getFreeCars() {
         return carRepository.getAllFreeCars();
     }
 
-    private Car getOldRating(Long idCar) {
-        return carRepository.getRatingByIdCar(idCar);
-    }
 
-    private Double calculateAverageRating(Double oldRating, Double newRating, Integer countOfRatings) {
-        return ((countOfRatings * oldRating) + newRating) / (countOfRatings + 1);
-    }
 }

@@ -10,10 +10,9 @@ import javax.persistence.*;
 @Setter
 public class RentalFeedback {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReview;
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String reviewText;
     private String loginName;
-    private Float rating;
 }
