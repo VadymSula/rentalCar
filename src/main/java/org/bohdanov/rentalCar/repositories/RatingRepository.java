@@ -17,10 +17,15 @@ public interface RatingRepository extends JpaRepository<CarRating, Long> {
     @Query(value =
             "UPDATE car_rating " +
                     "SET count_of_ratings = :count, rating_car = :rating " +
-                    "WHERE id_rating = :idRating;" +
-            "UPDATE car SET is_free_car = false WHERE id_car = :carId",
+                    "WHERE id_rating = :idRating",
             nativeQuery = true)
     void updateRating(@Param("count") Integer countOfRatings,
                       @Param("rating") Double rating,
                       @Param("idRating") Long idRating);
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value =
+            "UPDATE car SET is_free_car = true WHERE id_car = :idCar",
+            nativeQuery = true)
+    void setTrueOnIsFreeCar(@Param("idCar") Long idCar);
 }

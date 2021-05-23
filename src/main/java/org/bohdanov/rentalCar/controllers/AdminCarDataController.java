@@ -13,7 +13,8 @@ import java.util.Objects;
 @CrossOrigin("*")
 @RestController
 public class AdminCarDataController {
-    private static final List<String> typesList = Arrays.asList("classT", "colorT", "kppT", "bodyT", "fuelT");
+    private static final List<String> typesList =
+            Arrays.asList("classesOfCar", "colorsCar", "kppTypes", "typesOfBodyCar", "typesOfFuel");
 
     @ApiOperation(
             value = "Admin: Get types",
@@ -28,10 +29,10 @@ public class AdminCarDataController {
             value = "Admin: Add new type",
             notes = "Add new types by data from list of types"
     )
-    @PostMapping("/admin/data-of-cars/add")
+    @PostMapping("/admin/data-of-cars/add/{typeName}")
     public ResponseEntity<HttpStatus> addNewType(
             @RequestPart String data,
-            @RequestPart String typeName) {
+            @PathVariable("typeName") String typeName) {
         Objects.requireNonNull(chooseTypeNameForSetData(typeName)).addNew(data);
 
         return new ResponseEntity<>(HttpStatus.OK);

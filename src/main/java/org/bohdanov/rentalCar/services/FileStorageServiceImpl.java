@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -57,6 +58,15 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(PATH.toFile());
+    }
+
+    @Override
+    public void deleteByName(String filename) throws FileNotFoundException {
+        File file = new File(PATH.resolve(filename).toUri());
+
+        if (!file.delete()) {
+            throw new FileNotFoundException("File with this name is not exist!");
+        }
     }
 
     @Override

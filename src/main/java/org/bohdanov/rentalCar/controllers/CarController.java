@@ -108,6 +108,8 @@ public class CarController {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Doesn't exist element with id = " + idCar + " for remove");
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.badRequest().body("Doesn't exist image for Car with id = " + idCar + " for remove");
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -118,8 +120,8 @@ public class CarController {
                     "Put only: idRating (GET idRating FROM Car) and ratingCar"
     )
     @PostMapping("/cars/set-rating")
-    public ResponseEntity<HttpStatus> updateRatingCarBy(@RequestBody CarRating carRating) {
-        ratingService.updateRatingCar(carRating);
+    public ResponseEntity<HttpStatus> updateRatingCarBy(@RequestBody Car car) {
+        ratingService.updateRatingCar(car);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

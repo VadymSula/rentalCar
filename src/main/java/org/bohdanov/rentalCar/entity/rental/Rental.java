@@ -1,10 +1,10 @@
 package org.bohdanov.rentalCar.entity.rental;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.bohdanov.rentalCar.entity.car.Car;
+import org.bohdanov.rentalCar.entity.roles.User;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,11 +15,15 @@ import java.util.Date;
 public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long idRental;
     private Date beginRentalDate;
     private Date endRentalDate;
+    @Column(columnDefinition = "boolean default true")
+    private Boolean isActive;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Car car;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User userBuyer;
 }

@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service("carService")
@@ -51,12 +54,11 @@ public class CarService {
         return carRepository.findById(idCar);
     }
 
-    public void deleteCarById(Long idCar) {
+    public void deleteCarById(Long idCar) throws FileNotFoundException {
+        fileStorageService.deleteByName(Objects.requireNonNull(getCarById(idCar).orElse(null)).getFileName());
         carRepository.deleteById(idCar);
     }
-
     // TODO Dont work requests with @Query req to db
-
 
     public List<Car> getFreeCars() {
         return carRepository.getAllFreeCars();

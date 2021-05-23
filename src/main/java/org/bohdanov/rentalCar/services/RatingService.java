@@ -12,17 +12,22 @@ public class RatingService {
     @Autowired
     @Qualifier("ratingRepository")
     private RatingRepository ratingRepository;
+    @Autowired
+    @Qualifier("rentalService")
+    private RentalService rentalService;
 
-    public void updateRatingCar(CarRating carRating) {
+    public void updateRatingCar(Car car) {
         Double newRating = calculateAverageRating(
-                getOldRating(carRating.getIdRating()).getRatingCar(),
-                carRating.getRatingCar(),
-                getOldRating(carRating.getIdRating()).getCountOfRatings()
+                getOldRating(car.getCarRating().getIdRating()).getRatingCar(),
+                car.getCarRating().getRatingCar(),
+                getOldRating(car.getCarRating().getIdRating()).getCountOfRatings()
         );
         ratingRepository.updateRating(
-                (getOldRating(carRating.getIdRating()).getCountOfRatings()) + 1,
+                (getOldRating(car.getCarRating().getIdRating()).getCountOfRatings()) + 1,
                 newRating,
-                carRating.getIdRating());
+                car.getCarRating().getIdRating());
+        ratingRepository.setTrueOnIsFreeCar(car.getIdCar());
+        rentalService.setUnActiveRental(car.getIdCar());
     }
 
     private CarRating getOldRating(Long idCarRating) {

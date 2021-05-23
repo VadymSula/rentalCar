@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("rentalService")
 public class RentalService {
     @Autowired
@@ -16,12 +18,12 @@ public class RentalService {
     @Autowired
     private RentFeedbackRepository rentFeedbackRepository;
 
-
     public void addNewRental(Rental rental) {
         rentalRepository.addNewRental(
                 rental.getBeginRentalDate(),
                 rental.getEndRentalDate(),
-                rental.getCar().getIdCar()
+                rental.getCar().getIdCar(),
+                rental.getUserBuyer().getIdUser()
         );
     }
 
@@ -31,6 +33,14 @@ public class RentalService {
                 rentalFeedback.getReviewText()
         );
         rentalRepository.addIdsToCarRentalFeedback(idCar, getLastFeedback().getIdReview());
+    }
+
+    public List<Rental> getMyRentals(Long idRenter) {
+        return rentalRepository.getMyRentals(idRenter);
+    }
+
+    public void setUnActiveRental(Long idCar) {
+        rentalRepository.unActiveRental(idCar);
     }
 
     private RentalFeedback getLastFeedback() {

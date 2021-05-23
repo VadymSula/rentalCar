@@ -16,5 +16,7 @@ public interface FileStorageService {
 
     void deleteAll();
 
+    void deleteByName(String filename) throws FileNotFoundException;
+
     Stream<Path> loadAll();
 }

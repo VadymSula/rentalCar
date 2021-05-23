@@ -12,8 +12,8 @@ public class CarRating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRating;
-    @Column(columnDefinition = "decimal(10,2) default '0.00'", nullable = false)
+    @Column(columnDefinition = "decimal(10,2) default '0.00'")
     private Double ratingCar;
-    @Column(columnDefinition = "int default '0'", nullable = false)
+    @Column(columnDefinition = "int default '0'")
     private Integer countOfRatings;
 }

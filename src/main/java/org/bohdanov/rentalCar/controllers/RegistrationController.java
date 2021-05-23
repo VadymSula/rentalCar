@@ -1,10 +1,11 @@
 package org.bohdanov.rentalCar.controllers;
 
 import io.swagger.annotations.ApiOperation;
+import org.bohdanov.rentalCar.entity.car.Car;
+import org.bohdanov.rentalCar.entity.car.CarData;
 import org.bohdanov.rentalCar.entity.roles.User;
 import org.bohdanov.rentalCar.exceptions.UserNameAlreadyExistException;
 import org.bohdanov.rentalCar.models.jwtModels.JwtResponse;
-import org.bohdanov.rentalCar.services.security.SecurityService;
 import org.bohdanov.rentalCar.services.security.UserService;
 import org.bohdanov.rentalCar.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,11 +10,7 @@ import java.util.List;
 
 @Repository("carRepository")
 public interface CarRepository extends JpaRepository<Car, Long> {
-    @Query(value = "SELECT car.id_car, car.model_id_model, model.model_name " +
-            "FROM car JOIN model on car.model_id_model = model.id_model " +
-            "JOIN t_user tu on car.user_rent_id_user = tu.id_user " +
-            "WHERE car.user_rent_id_user = :idUser",
-            nativeQuery = true)
+    @Query(value = "SELECT c FROM Car c WHERE c.userRent.idUser = :idUser")
     List<Car> getMyCars(@Param("idUser") Long idUser);
 
     @Query("SELECT c FROM Car c WHERE c.isFreeCar = true")

@@ -58,6 +58,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public void makeUserToAdmin(Long idUser) {
+           userRepository.setRoleAdminForUser(idUser);
+    }
+
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 

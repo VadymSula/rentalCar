@@ -24,7 +24,7 @@ public class Car {
 
     @JsonView(CarView.Public.class)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY   )
+    @ManyToOne(fetch = FetchType.LAZY)
     private Model model;
 
     @JsonView(CarView.Public.class)
@@ -48,7 +48,6 @@ public class Car {
     private CarRating carRating;
 
     @JsonView(CarView.Internal.class)
-    @Column(unique = true, nullable = false)
     private String fileName;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -56,7 +55,7 @@ public class Car {
     private List<RentalFeedback> feedbacks;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User userRent;
 
     @Column(columnDefinition = "TEXT")

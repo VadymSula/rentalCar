@@ -43,4 +43,11 @@ public class AdminUserController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @ApiOperation("Admin: To make user role - Admin")
+    @PostMapping("admin/users/{idUser}/make-admin")
+    public ResponseEntity<HttpStatus> makeUserToAdmin(@PathVariable("idUser") Long idUser) {
+        userService.makeUserToAdmin(idUser);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }
