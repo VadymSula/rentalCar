@@ -59,25 +59,33 @@ public class UserService implements UserDetailsService {
     }
 
     public void makeUserToAdmin(Long idUser) {
-           userRepository.setRoleAdminForUser(idUser);
+        userRepository.setRoleAdminForUser(idUser);
     }
 
     public boolean saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
+        if (userRepository.findAll().isEmpty()) {
+            user.setRoles(Collections.singleton(new Role(3L, "ROLE_ADMIN")));
+        } else {
+            setRoleByIsRent(user);
+        }
+
         if (userFromDB != null) {
             return false;
         }
-
-        if (user.isRentRole())
-            user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER_BUYER")));
-        else
-            user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER_RENT")));
 
         String encode = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encode);
         userRepository.save(user);
         return true;
+    }
+
+    private void setRoleByIsRent(User user) {
+        if (user.isRentRole())
+            user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER_BUYER")));
+        else
+            user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER_RENT")));
     }
 
     public boolean deleteUser(Long userId) {
