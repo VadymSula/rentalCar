@@ -24,6 +24,6 @@ public class Rental {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Car car;
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private User userBuyer;
 }

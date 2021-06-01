@@ -55,7 +55,7 @@ public class Car {
     private List<RentalFeedback> feedbacks;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private User userRent;
 
     @Column(columnDefinition = "TEXT")
