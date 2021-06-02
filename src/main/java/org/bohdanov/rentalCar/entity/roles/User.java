@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private boolean isRentRole;
     @Transient
     private JwtResponse token;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Role> roles;
 
     @JsonIgnore

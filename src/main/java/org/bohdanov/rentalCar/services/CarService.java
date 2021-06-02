@@ -32,7 +32,6 @@ public class CarService {
     }
 
     public void saveNewCarForRental(Car car) {
-        //car.setPathToFile(FileStorageServiceImpl.PATH.resolve(Objects.requireNonNull(car.getPathToFile())).toString());
         carRepository.save(car);
     }
 

@@ -41,7 +41,6 @@ public class CarController {
 
     @ApiOperation("Get all cars")
     @GetMapping("/cars")
-    //@JsonView(CarView.Public.class)
     public ResponseEntity<List<Car>> getAllCars() {
         return ResponseEntity
                 .ok()

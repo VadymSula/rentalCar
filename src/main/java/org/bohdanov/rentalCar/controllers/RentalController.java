@@ -33,6 +33,7 @@ public class RentalController {
     public ResponseEntity<List<Rental>> getMyRentals(@PathVariable("idRent") Long idRenter) {
         return ResponseEntity.ok(rentalService.getMyRentals(idRenter));
     }
+
     @ApiOperation(
             value = "Add rental feedback",
             notes = "Add feedback, after his go to -> /cars/set-rating"
