@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
+import org.bohdanov.rentalCar.entity.car.Car;
 import org.bohdanov.rentalCar.models.jwtModels.JwtResponse;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -23,6 +25,8 @@ public class User implements UserDetails {
     private Long idUser;
     private String username;
     private String password;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Car> cars;
     @Transient
     private boolean isRentRole;
     @Transient
